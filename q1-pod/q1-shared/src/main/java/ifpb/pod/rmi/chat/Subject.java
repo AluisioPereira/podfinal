@@ -13,9 +13,9 @@ import java.rmi.Remote;
  */
 public interface Subject extends Remote {
 
-    void addObserver();
+    void addObserver(Observer o);
 
-    void removeObserver();
+    void removeObserver(Observer o);
 
     public void registry(String uuid, ChatClient client);
 

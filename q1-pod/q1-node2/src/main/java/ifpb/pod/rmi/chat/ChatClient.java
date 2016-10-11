@@ -6,6 +6,9 @@
 package ifpb.pod.rmi.chat;
 
 import java.rmi.RemoteException;
+import java.util.Iterator;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -24,19 +27,16 @@ public class ChatClient extends Observer implements ChatService {
 
     @Override
     public void sendMessage(Message msg) {
-        msg = new Message("Chat: ", "Aluísio");
+        Iterator it = observes.iterator();
+        while (it.hasNext()) {
+            Observer o = (Observer) it.next();
+            try {
+                o.notifyObserver(msg);
+            } catch (RemoteException ex) {
+                Logger.getLogger(ChatClient.class.getName()).log(Level.SEVERE, null, ex);
+            }
+
+        }
     }
 
-    //    public static void main(String[] args) {
-//        if (System.getSecurityManager() == null) {
-//            System.setSecurityManager(new RMISecurityManager());
-//        }
-//        try {
-//            ChatService remoteService = (ChatService) Naming.lookup("//localhost:9999/RmiService");
-//            ChatClient client = new ChatClient();
-//            Message msg = new Message("POD", "Chat com RMI");
-//            remoteService.sendMessage(msg);
-//        } catch (NotBoundException | MalformedURLException | RemoteException ex) {
-//        }
-//    }
 }

@@ -8,6 +8,9 @@ package ifpb.pod.rmi.chat;
 import java.rmi.Remote;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 
 /**
  *
@@ -15,11 +18,20 @@ import java.rmi.server.UnicastRemoteObject;
  */
 public class Observer extends UnicastRemoteObject implements Remote {
 
+    private static final long serialVersionUID = 1L;
+    List observes = new ArrayList();
+
     public Observer() throws RemoteException {
         super();
     }
 
     public void notifyObserver(Message msg) throws RemoteException {
+        Iterator it = observes.iterator();
+        while (it.hasNext()) {
+            Observer o = (Observer) it.next();
+            o.notifyObserver(msg);
+            System.out.println(msg);
+        }
 
     }
 
