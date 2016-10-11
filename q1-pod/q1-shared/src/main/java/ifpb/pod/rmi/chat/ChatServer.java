@@ -5,8 +5,14 @@
  */
 package ifpb.pod.rmi.chat;
 
+import ifpb.pod.rmi.chat.ChatService;
+import ifpb.pod.rmi.chat.Message;
+import ifpb.pod.rmi.chat.Observer;
+import ifpb.pod.rmi.chat.Subject;
 import java.rmi.RemoteException;
+import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -14,29 +20,37 @@ import java.util.logging.Logger;
  *
  * @author ajp
  */
-public class ChatClient extends Observer implements ChatService {
+public class ChatServer implements ChatService, Subject {
 
-    private static final long serialVersionUID = 1L;
-
-    ChatClient(ChatService service) throws RemoteException {
-        super();
-    }
-
-    public ChatClient() throws RemoteException {
-    }
+    List observes = new ArrayList();
 
     @Override
-    public void sendMessage(Message msg) {
+    public void sendMessage(Message m) {
         Iterator it = observes.iterator();
         while (it.hasNext()) {
             Observer o = (Observer) it.next();
             try {
-                o.notifyObserver(msg);
+                o.notifyObserver(m);
             } catch (RemoteException ex) {
                 Logger.getLogger(ChatClient.class.getName()).log(Level.SEVERE, null, ex);
             }
 
         }
+    }
+
+    @Override
+    public void addObserver(Observer o) {
+        observes.add(o);
+    }
+
+    @Override
+    public void removeObserver(Observer o) {
+        observes.remove(o);
+    }
+
+    @Override
+    public void registry(String uuid, ifpb.pod.rmi.chat.ChatClient client) {
+
     }
 
 }

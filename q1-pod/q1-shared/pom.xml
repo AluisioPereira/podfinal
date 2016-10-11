@@ -8,14 +8,6 @@
     </parent>
     <artifactId>q1-shared</artifactId>
     <packaging>jar</packaging>
-    <dependencies>
-        <dependency>
-            <groupId>ifpb.pod.rmi.chat</groupId>
-            <artifactId>q1-sharad</artifactId>
-            <version>1.0</version>
-            <type>jar</type>
-        </dependency>
-    </dependencies>
     <properties>
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
