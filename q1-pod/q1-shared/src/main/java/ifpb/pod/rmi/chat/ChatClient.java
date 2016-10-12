@@ -5,9 +5,6 @@
  */
 package ifpb.pod.rmi.chat;
 
-import ifpb.pod.rmi.chat.ChatService;
-import ifpb.pod.rmi.chat.Message;
-import ifpb.pod.rmi.chat.Observer;
 import java.rmi.RemoteException;
 import java.util.Iterator;
 import java.util.logging.Level;
@@ -17,6 +14,7 @@ import java.util.logging.Logger;
  *
  * @author ajp
  */
+@SuppressWarnings("serial")
 public class ChatClient extends Observer implements ChatService {
 
     private static final long serialVersionUID = 1L;

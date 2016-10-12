@@ -5,10 +5,6 @@
  */
 package ifpb.pod.rmi.chat;
 
-import ifpb.pod.rmi.chat.ChatService;
-import ifpb.pod.rmi.chat.Message;
-import ifpb.pod.rmi.chat.Observer;
-import ifpb.pod.rmi.chat.Subject;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -20,6 +16,7 @@ import java.util.logging.Logger;
  *
  * @author ajp
  */
+@SuppressWarnings("serial")
 public class ChatServer implements ChatService, Subject {
 
     List observes = new ArrayList();
@@ -49,8 +46,8 @@ public class ChatServer implements ChatService, Subject {
     }
 
     @Override
-    public void registry(String uuid, ifpb.pod.rmi.chat.ChatClient client) {
-
+    public void registry(String uuid, ChatClient client) {
+        this.observes.add(client);
     }
 
 }

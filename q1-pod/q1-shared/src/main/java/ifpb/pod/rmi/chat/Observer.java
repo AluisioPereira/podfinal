@@ -16,6 +16,7 @@ import java.util.List;
  *
  * @author ajp
  */
+@SuppressWarnings("serial")
 public class Observer extends UnicastRemoteObject implements Remote {
 
     private static final long serialVersionUID = 1L;
