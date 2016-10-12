@@ -5,14 +5,13 @@
  */
 package ifpb.pod.rmi.chat.cliente;
 
-import ifpb.pod.rmi.chat.shared.Message;
-import ifpb.pod.rmi.chat.shared.Publisher;
-import ifpb.pod.rmi.chat.shared.Topic;
-import java.rmi.NotBoundException;
+import ifpb.pod.rmi.chat.shared.TopicManager;
+import ifpb.pod.rmi.chat.shared.TopicManagerImpl;
+import java.rmi.AccessException;
+import java.rmi.AlreadyBoundException;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
-import java.util.Scanner;
 
 /**
  *
@@ -20,21 +19,25 @@ import java.util.Scanner;
  */
 public class App {
 
-    public static void main(String[] args) throws RemoteException, NotBoundException {
-        String uuid = "aluisio1102@gmail.com";
-        Registry registry = LocateRegistry.getRegistry(10999);
-        Topic topic = (Topic) registry.lookup("__ChatServer__");
-        Publisher publisher = (Publisher) registry.lookup("__ChatServer__");
-        ChatClientImpl client = new ChatClientImpl(publisher);
-        topic.register(uuid, client);
-        Scanner scanner = new Scanner(System.in);
-        while (true) {
-            String text = scanner.nextLine();
-            Message message = new Message();
-            message.setFrom(uuid);
-            message.setText(text);
-            client.sendMessage(message);
-        }
+    private static void startServer() throws Exception {
+        String _port = System.getenv("PORT") != null
+                ? System.getenv("PORT") : "8080";
+        Integer port = Integer.parseInt(_port);
+        //
+
+    }
+
+    private static void startRMIServer() throws AccessException, RemoteException, AlreadyBoundException {
+        //
+        final TopicManager manager = new TopicManagerImpl();
+        //
+        Registry registry = LocateRegistry.createRegistry(1099);
+        registry.bind("__ChatServer__", manager);
+    }
+
+    public static void main(String[] args) throws Exception {
+        startRMIServer();
+        startServer();
     }
 
 }

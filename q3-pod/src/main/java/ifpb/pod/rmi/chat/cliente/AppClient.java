@@ -29,7 +29,7 @@ public class AppClient {
 
     @SuppressWarnings("restriction")
     private static Registry getRegistry() throws IOException {
-        String url = "ag-rmi-pubsub-chatinheroku.herokuapp.com";
+        String url = "rocky-scrubland-15258.herokuapp.com";
         RMISocketFactory.setSocketFactory(new sun.rmi.transport.proxy.RMIHttpToCGISocketFactory());
         return LocateRegistry.getRegistry(
                 url, 1099, RMISocketFactory.getSocketFactory());
